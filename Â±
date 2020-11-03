@@ -1,0 +1,54 @@
+import numpy as np
+import math
+import random
+
+def binary_entropy(p):
+    """
+    This method calculates the binary entropy.
+    """
+    entropy = p * math.log2(1 / p) + (1 - p) * math.log2(1 / (1-p))
+    return entropy
+
+def calculate_weight(in_vec):
+    """
+    This method calculates the weight for a given input state vector
+    """
+    weight = sum(in_vec) / len(in_vec)
+    return weight
+
+def choose_update_vec(curr_state):
+    """
+    choose either a neighbor or self based on probabilities
+    """
+    # find the neighbors
+    next_vec = curr_state
+    print("current state vector")
+    print(curr_state)
+    for index in range(len(curr_state)):
+        curr_val = curr_state[index]
+        if curr_val == 1:
+            next_vec[index] = 0
+        elif curr_val == 0:
+            next_vec[index] = "1"
+    print("older vector:")
+    print(next_vec, curr_state)
+    return next_vec
+def mcmc_hypercube(n, T):
+    """
+    This method impliments the MCMC method on a particle.
+    """
+    # guess initial state vector
+    curr_state = np.random.randint(0, high=2, size=n)
+    # run through the algorithm
+    for iteration in range(T):
+        # choose an update
+        update_vec = choose_update_vec(curr_state)
+        print("updated vector:")
+        print(update_vec)
+
+# Main function for running the script.
+def main():
+    mcmc_hypercube(3, 4)
+
+if __name__ == "__main__":
+    main()
